@@ -1,93 +1,3 @@
-/*
-class Text extends React.Component {
-    //renders a simple text output
-
-    render() {
-        return (
-            <span onClick = {this.props.onClick}>
-                {this.props.value}
-            </span>
-        )
-    }
-
-}
-
-
-class TextInput extends React.Component {
-    //renders a simple text input
-
-    constructor(props) {
-        super(props);
-        this.type = 'text';
-    } 
-
-    render() {
-        return (
-            <input 
-                type = {this.type}
-                name = {this.props.name} 
-                value = {this.props.value} 
-                onChange = {this.props.onChange} 
-                disabled = {!this.props.editable}
-            />
-        )
-    }
-
-}
-
-
-class PasswordInput extends TextInput {
-    //renders a password input
-
-    constructor(props) {
-        super(props);
-        this.type = 'password';
-    }
-
-}
-
-
-class CheckInput extends React.Component {
-    //renders a checkbox input
-
-    constructor(props) {
-        super(props);
-        this.type = 'checkbox';
-    } 
-
-    render() {
-        return (
-            <input 
-                type = {this.type} 
-                name = {this.props.name} 
-                value = {this.props.value} 
-                defaultChecked = {this.props.value}
-                onChange = {this.props.onChange} 
-                disabled = {!this.props.editable}
-            />
-        )
-    }
-
-}
-
-
-class TextareaInput extends React.Component {
-    //renders a multiple line text input
-
-    render() {
-        return (
-            <textarea 
-                name = {this.props.name} 
-                value = {this.props.value} 
-                onChange = {this.props.onChange} 
-                disabled = {!this.props.editable}
-            />
-        )
-    }
-
-}
-*/
-
 class LogoutMenu extends React.Component {
     //renders menu options when user NOT logged in
 
@@ -132,8 +42,8 @@ class RUDMenu extends React.Component {
                 </div>
             ):(this.props.mode=='update')?(
                 <div className="menu">
-                <button onClick={this.props.okUpdateClick}>Save</button>
-                <button onClick={this.props.revertClick}>Revert</button>
+                <button onClick={this.props.okUpdateClick} disabled={!this.props.changed}>Save</button>
+                <button onClick={this.props.revertClick} disabled={!this.props.changed}>Revert</button>
                 <button onClick={this.props.cancelClick}>Cancel</button>
                 </div>
             ):(this.props.mode=='delete')?(
@@ -160,14 +70,13 @@ class CRUDMenu extends React.Component {
                 </div>
             ):(this.props.mode=='create')?(
                 <div className="menu">
-                <button onClick={this.props.okCreateClick}>Save</button>
-                <button onClick={this.props.revertClick}>Revert</button>
+                <button onClick={this.props.okCreateClick} disabled={!this.props.changed}>Save</button>
+                <button onClick={this.props.revertClick} disabled={!this.props.changed}>Revert</button>
                 <button onClick={this.props.cancelClick}>Cancel</button>
                 </div>
             ):(this.props.mode=='search')?(
                 <div className="menu">
                 <button onClick={this.props.okSearchClick}>OK</button>
-                <button onClick={this.props.revertClick}>Revert</button>
                 <button onClick={this.props.cancelClick}>Cancel</button>
                 </div>
             ):(this.props.mode=='read')?(
@@ -180,8 +89,8 @@ class CRUDMenu extends React.Component {
                 </div>
             ):(this.props.mode=='update')?(
                 <div className="menu">
-                <button onClick={this.props.okUpdateClick}>Save</button>
-                <button onClick={this.props.revertClick}>Revert</button>
+                <button onClick={this.props.okUpdateClick} disabled={!this.props.changed}>Save</button>
+                <button onClick={this.props.revertClick} disabled={!this.props.changed}>Revert</button>
                 <button onClick={this.props.cancelClick}>Cancel</button>
                 </div>
             ):(this.props.mode=='delete')?(
@@ -204,7 +113,8 @@ class GenericForm extends React.Component {
         this.state = {
             mode: null, //operation mode: create, search, read, update, delete
             editable: false, //make inputs editable or not
-            fields: this.initFields()
+            fields: this.initFields(),
+            changed: false
         };
 
         this.savedFields = null;
@@ -220,7 +130,7 @@ class GenericForm extends React.Component {
     }
 
     inputChange(event) {
-        this.setState({fields: Object.assign({}, this.state.fields, {[event.target.name]:event.target.value})});
+        this.setState({fields: Object.assign({}, this.state.fields, {[event.target.name]:event.target.value}), changed: true});
     }
 
 }

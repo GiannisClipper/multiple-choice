@@ -34,12 +34,12 @@ def read_users():
 def read_user(id):
     return views.read(id)
 
-@bp.route('/users/<int:id>/tests', methods=['GET'])
+@bp.route('/users/<int:id>/works', methods=['GET'])
 @cross_origin()
 @models.Users.login_required
 @models.Users.identity_required
-def read_user_tests(id):
-    return views.tests(id)
+def read_user_works(id):
+    return views.works(id)
 
 @bp.route('/users/<int:id>', methods=['PUT'])
 @cross_origin()

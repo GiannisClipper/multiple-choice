@@ -1,3 +1,8 @@
+#pip install flask
+#pip install flask_sqlalchemy
+#pip install flask_migrate
+#pip install flask_cors
+
 from flask import Flask
 
 app = Flask(__name__, instance_relative_config=True)

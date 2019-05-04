@@ -5,10 +5,9 @@ from ..base import validation, errors
 
 def create(request):
     data = request.get_json() or {}
-    print(data)
     error_messages = validation.validate(
         validation.NotBlank('title', data.get('title')),
-        validation.Unique(models.Works, {'title':data.get('title'), 'user_id':app.current_user.id}, id) if 'title' in data else None
+        validation.Unique(models.Works, {'title':data.get('title'), 'user_id':app.current_user.id}) if 'title' in data else None
     )
     if not error_messages:
         work = models.Works()

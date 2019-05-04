@@ -143,6 +143,14 @@ class ProfileForm extends ProfileLogic {
                         disabled = {!this.state.editable}
                     />
 
+                    <label>About</label>
+                    <textarea
+                        name = "about" 
+                        value = {this.state.fields.about} 
+                        onChange = {this.inputChange.bind(this)} 
+                        disabled = {!this.state.editable}
+                    />
+
                     <label>Password</label>
                     <input
                         type = "password"
@@ -167,15 +175,7 @@ class ProfileForm extends ProfileLogic {
                         name = "email"
                         value = {this.state.fields.email} 
                         onChange = {this.inputChange.bind(this)} 
-                        disabled = {!this.state.editable}
-                    />
-
-                    <label>About</label>
-                    <textarea
-                        name = "about" 
-                        value = {this.state.fields.about} 
-                        onChange = {this.inputChange.bind(this)} 
-                        disabled = {!this.state.editable}
+                        disabled = {true}
                     />
                 </div>
 
@@ -184,6 +184,7 @@ class ProfileForm extends ProfileLogic {
 
                     <RUDMenu 
                         mode = {this.state.mode}
+                        changed = {this.state.changed}
                         updateClick = {this.updateClick.bind(this)}
                         deleteClick = {this.deleteClick.bind(this)}
                         closeClick = {this.props.handleMenu}

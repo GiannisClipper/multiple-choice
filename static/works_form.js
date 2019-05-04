@@ -40,6 +40,7 @@ class WorksForm extends WorksQuestionsAnswersLogic {
 
                     <CRUDMenu
                         mode = {this.state.mode}
+                        changed = {this.state.changed}
                         createClick = {this.createClick.bind(this)}
                         searchClick = {this.searchClick.bind(this)}
                         updateClick = {this.updateClick.bind(this)}
@@ -152,15 +153,13 @@ class QuestionsList extends React.Component {
                 />
             )}
             
-            {(total<12)?(
+            {(this.props.editable && total<12)?(
                 <button
                     className = "add-question"
                     onClick = {() => this.props.addQuestion()}
                     disabled = {!this.props.editable}
                 >+ Question</button>
-            ):(
-                <span>Max 12 questions per work</span>
-            )}
+            ):null}
 
             </ul>
         )
@@ -302,15 +301,13 @@ class AnswersList extends React.Component {
                 />
             )}
 
-            {(total<8)?(
+            {(this.props.editable && total<8)?(
                 <button
                     className = "add-answer"
                     onClick = {() => this.props.addAnswer(this.props.questIndex)}
                     disabled = {!this.props.editable}
                 >+ Answer</button>
-            ):(
-                <span>Max 8 answers per question</span>
-            )}
+            ):null}
 
             </ul>
         )
@@ -365,7 +362,7 @@ class AnswerPart1 extends React.Component {
                         type = "checkbox"
                         name = "is_correct"
                         value = {this.props.answer.is_correct}
-                        defaultChecked = {this.props.answer.is_correct}
+                        checked = {this.props.answer.is_correct}
                         onChange = {(event) => this.props.changeAnswer(event, this.props.questIndex, this.props.index)}
                         disabled = {!this.props.editable}
                     />
@@ -405,7 +402,7 @@ class AnswerPart2 extends React.Component {
                     value = {this.props.answer.answer}
                     onChange = {(event) => this.props.changeAnswer(event, this.props.questIndex, this.props.index)}
                     disabled = {!this.props.editable}
-                />    
+                />
             </div>
         )
     }

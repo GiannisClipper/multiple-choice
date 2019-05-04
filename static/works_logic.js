@@ -32,7 +32,7 @@ class WorksLogic extends GenericForm {
         await request(`${document.globals.origin}/works`, 'POST', document.globals.token, this.state.fields,
             (status, data) => {
                 this.setSavedFields(data);
-                this.setState({mode:'update', editable:true});
+                this.setState({mode:'update', fields:this.getSavedFields(), changed: false, editable:true});
             },
             (status, message) => {
                 this.setState({editable:true});
@@ -70,11 +70,12 @@ class WorksLogic extends GenericForm {
     }
 
     async okUpdateClick(event) {
+        console.log(this.state.fields==this.getSavedFields());
         await this.setState({editable:false});
         await request(`${document.globals.origin}/works/${this.state.fields.id}`, 'PUT', document.globals.token, this.state.fields,
             (status, data) => {
                 this.setSavedFields(data);
-                this.setState({editable:true});
+                this.setState({changed: false, editable:true});
             },
             (status, message) => {
                 this.setState({editable:true});
@@ -96,13 +97,13 @@ class WorksLogic extends GenericForm {
 
     async revertClick(event) {
         let fields = ['search', 'update'].includes(this.state.mode)?this.getSavedFields():this.initFields();
-        this.setState({fields:fields});
+        this.setState({fields:fields, changed: false});
     }
 
     async cancelClick(event) {
         let mode = ['update', 'delete'].includes(this.state.mode)?'read':null;
         let fields = ['update', 'delete'].includes(this.state.mode)?this.getSavedFields():this.initFields();
-        this.setState({mode:mode, editable:false, fields:fields});
+        this.setState({mode:mode, editable:false, fields:fields, changed: false});
     }
 }
 
@@ -118,7 +119,7 @@ class WorksQuestionsLogic extends WorksLogic {
         let questions = fields.questions.slice();
         questions.push({question:'', answers:[]});
         fields.questions = questions;
-        await this.setState({fields:fields});
+        await this.setState({fields:fields, changed: true});
     }
 
     async changeQuestion(event, index) {
@@ -126,7 +127,7 @@ class WorksQuestionsLogic extends WorksLogic {
         let questions = fields.questions.slice();
         questions[index][event.target.name] = event.target.value;
         fields.questions = questions;
-        await this.setState({fields:fields});
+        await this.setState({fields:fields, changed: true});
     }
 
     async moveUpQuestion(index) {
@@ -137,7 +138,7 @@ class WorksQuestionsLogic extends WorksLogic {
             questions[index-1] = questions[index];
             questions[index] = tmp;
             fields.questions = questions;
-            await this.setState({fields:fields});
+            await this.setState({fields:fields, changed: true});
         }
     }
 
@@ -149,7 +150,7 @@ class WorksQuestionsLogic extends WorksLogic {
             questions[index+1] = questions[index];
             questions[index] = tmp;
             fields.questions = questions;
-            await this.setState({fields:fields});
+            await this.setState({fields:fields, changed: true});
         }
     }
 
@@ -158,7 +159,7 @@ class WorksQuestionsLogic extends WorksLogic {
         let questions = fields.questions.slice();
         questions.splice(index,1);
         fields.questions = questions;
-        await this.setState({fields:fields});
+        await this.setState({fields:fields, changed: true});
     }
 }
 
@@ -174,7 +175,7 @@ class WorksQuestionsAnswersLogic extends WorksQuestionsLogic {
         let answers = fields.questions[questIndex].answers.slice();
         answers.push({answer:'', is_correct:false});
         fields.questions[questIndex].answers = answers;
-        await this.setState({fields:fields});
+        await this.setState({fields:fields, changed: true});
     }
 
     async changeAnswer(event, questIndex, index) {
@@ -186,7 +187,7 @@ class WorksQuestionsAnswersLogic extends WorksQuestionsLogic {
             answers[index][event.target.name] = event.target.value;
         }
         fields.questions[questIndex].answers = answers;
-        await this.setState({fields:fields});
+        await this.setState({fields:fields, changed: true});
     }
 
     async moveUpAnswer(questIndex, index) {
@@ -199,7 +200,7 @@ class WorksQuestionsAnswersLogic extends WorksQuestionsLogic {
             answers[index] = tmp;
             questions[questIndex].answers = answers;
             fields.questions = questions;
-            await this.setState({fields:fields});
+            await this.setState({fields:fields, changed: true});
         }
     }
 
@@ -213,7 +214,7 @@ class WorksQuestionsAnswersLogic extends WorksQuestionsLogic {
             answers[index] = tmp;
             questions[questIndex].answers = answers;
             fields.questions = questions;
-            await this.setState({fields:fields});
+            await this.setState({fields:fields, changed: true});
         }
     }
 
@@ -222,6 +223,6 @@ class WorksQuestionsAnswersLogic extends WorksQuestionsLogic {
         let answers = fields.questions[questIndex].answers.slice();
         answers.splice(index,1);
         fields.questions[questIndex].answers = answers;
-        await this.setState({fields:fields});
+        await this.setState({fields:fields, changed: true});
     }
 }
