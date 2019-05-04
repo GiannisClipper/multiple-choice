@@ -1,0 +1,50 @@
+<style>
+    div.big {
+        border: 1px solid black;
+        position: relative;
+        height: 4em;
+    }
+
+    div.big * {
+        display: inline-block;
+        border: 1px dotted black;
+        position: absolute;
+    }
+
+    div.small1 {
+        top: 0;
+    }
+
+    div.medium {
+        bottom: 0;
+    }
+
+    div.small2 {
+        top: 0;
+        left: 20%;
+    }
+
+    div.small3 {
+        top: 0;
+        left: 10%;
+    }
+</style>
+
+
+<div class='big'>
+    <div clsss='small1'>
+        Small 1
+    </div>
+
+    <h3 class='medium'>
+        Medium content here
+    </h3>
+
+    <div class='small2'>
+        Small 2
+    </div>
+
+    <div class='small3'>
+        Small3
+    </div>            
+</div>

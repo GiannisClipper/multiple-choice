@@ -1,0 +1,210 @@
+/* generic */
+
+* {
+	box-sizing: border-box;
+    margin: 0;
+    outline: inherit;
+	border: none;
+   	padding: 0;
+ 	background: none;
+	color: inherit;
+	font: inherit;
+	text-decoration: none;
+}
+
+a, button {
+	cursor: pointer;
+}
+
+
+/* body, container, header, main, footer */
+
+body {
+	--color-body: rgb(10,10,20);
+	--color-back: rgb(142, 209, 159);
+	--color-form: rgb(113, 196, 148);
+	--color-input: rgb(225, 225, 255);
+	--color-menu: rgb(245, 149, 146);
+
+    background-color: var(--color-body);
+    font-family: monospace, "Trebuchet MS", fantasy;
+    font-size: 0.95em;
+}
+
+.container {
+	width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+
+	min-height: 100vh; /* allow child (.container2) to be centered vertical */
+	line-height: 100vh; /* allow child (.container2) to be centered vertical */
+}
+
+.container2 {
+	width: 100%;
+    background-color: var(--color-back);
+    text-align: center;
+
+	display: inline-block; /* center vertical to parent (.container) */
+	line-height: normal; /* center vertical to parent (.container) */
+	vertical-align: middle; /* center vertical to parent (.container) */
+}
+
+main {
+	min-height: calc(50vh); /* allow child (.form) to be centered vertical */
+	line-height: 50vh; /* allow child (.form) to be centered vertical */
+}
+
+header, footer {
+    text-align: center;
+    height: 4em;
+}
+
+header *, footer * {
+	display: inline-block;
+	margin-top: 1em;
+}
+
+header h1 {
+	color: var(--color-input);
+	text-shadow: -1px 0 var(--color-form), 0 1px var(--color-form), 1px 0 var(--color-form), 0 -1px var(--color-form);
+	font-size: 1.4em;
+	font-weight: 600;
+	font-style: italic;
+}
+
+header .menu {
+	margin-left: 1em;
+}
+
+header .menu *, footer a {
+	margin: 0 .25em;
+	border-radius: 5% 5% 25% 5%;
+	padding: 0.25em;
+	background-color: var(--color-menu);
+}
+
+footer a {
+	font-size: .8em;
+}
+
+
+/* forms */
+
+.form {
+	width: 90%;
+	margin-left: auto;
+    margin-right: auto;
+	border-radius: 5% 5% 25% 5%;
+	background-color: var(--color-form);
+	text-align: center;
+
+	display: inline-block; /* center vertical to parent (.main) */
+	line-height: normal; /* center vertical to parent (.main) */
+	vertical-align: middle; /* center vertical to parent (.main) */
+}
+
+.form label {
+	padding-top: .5em;
+}
+
+.form .data {
+	width: 35em;
+    margin-left: auto;
+    margin-right: auto;
+	padding-top: 1em;
+	text-align: left;
+}
+
+.form .data > * {
+	display: block;
+}
+
+input, textarea {
+    background-color: var(--color-input);
+	padding: 0.25em;
+	width: 100%;
+}
+
+input:disabled, textarea:disabled {
+	opacity: .9;
+}
+
+.form .panel * {
+	display: inline-block;
+	margin: 1em 0;
+}
+
+.form h2 {
+	color: var(--color-input);
+	text-shadow: -1px 0 var(--color-back), 0 1px var(--color-back), 1px 0 var(--color-back), 0 -1px var(--color-back);
+	font-size: 1.2em;
+	font-weight: 300;
+	font-style: italic;
+}
+
+.form .menu {
+	margin-left: 1em;
+}
+
+.form .menu * {
+	margin: 0 .25em;
+	border-radius: 5% 5% 25% 5%;
+	padding: 0.25em;
+	background-color: var(--color-menu);
+}
+
+
+/* test form's questions and answers */
+
+.add-question, 
+.add-answer {
+	margin: .5em 0;
+	padding: 0 .75em;
+	border-radius: 5% 5% 25% 5%;
+	background-color: var(--color-menu);
+}
+
+.question, 
+.answer {
+	margin: .5em 0;
+}
+
+.question > *,
+.answer > * {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.question .part1, 
+.answer .part1 {
+	padding-right: .5em;
+}
+
+.question .part1 > *,
+.answer .part1 > * {
+	font-size: 1.1em;
+	display: block;
+	width: 100%;
+	text-align: right;
+}
+
+.question .part1 .index > *,
+.answer .part1 .index > * {
+	font-weight: 300;
+	display: inline-block;
+}
+
+input[name=is_correct] {
+	margin-right: .5em;
+	width: initial;
+}
+
+.question .part2 {width: calc(100% - 4em);}
+.answer .part2 {width: calc(100% - 5em);}
+
+.question .part3 > *, 
+.answer .part3 > * {
+	padding: 0 0 0 .25em;
+	display: block;
+}

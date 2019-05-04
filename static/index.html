@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>       
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="style.css">
+
+        <!--<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>-->
+        <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+        <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+
+        <script type="text/babel" src="./app.js"></script>
+        <script type="text/babel" src="./generic_js.js"></script>
+        <script type="text/babel" src="./generic_react.js"></script>
+
+        <script type="text/babel" src="./users_logic.js"></script>
+        <script type="text/babel" src="./users_form.js"></script>
+        <script type="text/babel" src="./works_logic.js"></script>
+        <script type="text/babel" src="./works_form.js"></script>
+    </head>
+    <body>
+        <div id="root">
+        </div>
+
+        <script type="text/babel">
+            ReactDOM.render(
+                <App/>,
+                document.getElementById("root")
+            )
+        </script>
+    </body>
+</html>

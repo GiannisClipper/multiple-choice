@@ -1,0 +1,11 @@
+#git ignores following folders and files
+
+venv/
+
+migrations/
+**/__pycache__
+
+/sqlite.db
+
+env.bat
+env.env
