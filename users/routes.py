@@ -15,6 +15,11 @@ def create_user():
 def login():
     return views.login(request)
 
+@bp.route('/users/activate/<token>', methods=['GET'])
+@cross_origin()
+def activate_user(token):
+    return views.activate(token)
+
 @bp.route('/users/logout', methods=['POST', 'PUT', 'GET'])
 @cross_origin()
 @models.Users.login_required

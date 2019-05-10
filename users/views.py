@@ -17,7 +17,7 @@ def create(request):
         validation.MinLength('password', data.get('password'), 4),
         validation.NotBlank( 'email', data.get('email')),
         validation.Email('email', data.get('email')), 
-        validation.Unique(models.Users, {'email':lower(data.get('email'))}) if lower(data.get('email'))!=app.config['EMAIL_HOST_USER'] else None
+        validation.Unique(models.Users, {'email':lower(data.get('email'))}) if lower(data.get('email'))!=app.config['MAIL_USERNAME'] else None
     )
     if not error_messages:
         user = models.Users()
@@ -25,11 +25,22 @@ def create(request):
         db.session.add(user)
         db.session.commit()
         data = user.serialize()
+
+        user.create_activation_email(request)
+
         response = Response(json.dumps(data), status=201, mimetype='application/json')
         response.headers['Location'] = url_for('users.read_user', id=user.id)
         return response
     else:
         return errors.error(409, error_messages)
+
+
+def activate(token):
+    if models.Users.check_activation_email(token):
+        response = Response(json.dumps({}), status=200, mimetype='application/json')
+        return response
+    else:
+        return errors.error(404)
 
 
 def login(request):

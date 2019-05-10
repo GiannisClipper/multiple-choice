@@ -1,16 +1,15 @@
 from . import app, db
 from .base import errors
 from .base.tokens import Token
+from .base.jwtoken import JWToken
+from .base.email import Email
+
 from .base.API_responses import SingleRecordAPI, ListAPI, PaginatedListAPI
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import url_for, request
 from datetime import datetime, timedelta
 from functools import wraps
-
-#from time import time
-#import jwt
-#from server import app
 
 class Users(db.Model, Token, SingleRecordAPI, PaginatedListAPI):
     __tablename__='users'
@@ -38,14 +37,25 @@ class Users(db.Model, Token, SingleRecordAPI, PaginatedListAPI):
         return password and check_password_hash(self.password, password)
 
 
-    #def generate_reset_password_token(self, expires_in=600):
-    #    return jwt.encode({'reset_password': self.id, 'exp': time()+expires_in}, app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+    def create_activation_email(self, request):
+        subject = '[Multiple-choice] New account activation'
+        sender = app.config['MAIL_USERNAME']
+        recipients = [self.email]
+        token = JWToken.generate_token({'user_id':self.id}, 600)
+        url = request.url_root[:-1]+url_for('users.activate_user', token=token)
+        html_body = f'Please click following link to activate your account: <a href="{url}">{url}</a>'
+        Email().send(subject, sender, recipients, html_body=html_body)
 
-    #@staticmethod
-    #def check_reset_password_token(token):
-    #    try: id=jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])['reset_password']
-    #    except: return
-    #    return Users.query.get(id)
+    @classmethod
+    def check_activation_email(cls, token):
+        data = JWToken.check_token(token)
+        if data:
+            user = cls.query.filter_by(id=data['user_id']).first()
+            if user:
+                user.is_active = True
+                db.session.commit()
+                return True
+        return False
 
 
     def create_token(self, expires_in=3600):
@@ -110,7 +120,7 @@ class Users(db.Model, Token, SingleRecordAPI, PaginatedListAPI):
         if new_record:
             self.create_password_hash(data['password'])
             self.email = data['email'].lower()
-            self.is_active = True
+            self.is_active = False
             self.created_at = datetime.utcnow()
         else:
             if 'password' in data and data['password']:

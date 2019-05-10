@@ -3,7 +3,7 @@ from datetime import datetime
 from .. import app
 
 
-class Token:
+class JWToken:
     '''Class to handle tokens'''
 
     @staticmethod
