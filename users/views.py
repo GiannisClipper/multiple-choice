@@ -26,7 +26,7 @@ def create(request):
         db.session.commit()
         data = user.serialize()
 
-        user.create_activation_email(request)
+        user.send_activation_token(request)
 
         response = Response(json.dumps(data), status=201, mimetype='application/json')
         response.headers['Location'] = url_for('users.read_user', id=user.id)
@@ -36,7 +36,7 @@ def create(request):
 
 
 def activate(token):
-    if models.Users.check_activation_email(token):
+    if models.Users.check_activation_token(token):
         response = Response(json.dumps({}), status=200, mimetype='application/json')
         return response
     else:

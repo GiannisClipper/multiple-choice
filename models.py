@@ -11,6 +11,7 @@ from flask import url_for, request
 from datetime import datetime, timedelta
 from functools import wraps
 
+
 class Users(db.Model, Token, SingleRecordAPI, PaginatedListAPI):
     __tablename__='users'
     id = db.Column(db.Integer, primary_key=True)
@@ -37,7 +38,7 @@ class Users(db.Model, Token, SingleRecordAPI, PaginatedListAPI):
         return password and check_password_hash(self.password, password)
 
 
-    def create_activation_email(self, request):
+    def send_activation_token(self, request):
         subject = '[Multiple-choice] New account activation'
         sender = app.config['MAIL_USERNAME']
         recipients = [self.email]
@@ -47,7 +48,7 @@ class Users(db.Model, Token, SingleRecordAPI, PaginatedListAPI):
         Email().send(subject, sender, recipients, html_body=html_body)
 
     @classmethod
-    def check_activation_email(cls, token):
+    def check_activation_token(cls, token):
         data = JWToken.check_token(token)
         if data:
             user = cls.query.filter_by(id=data['user_id']).first()
