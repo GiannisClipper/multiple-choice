@@ -21,20 +21,7 @@ migrate = Migrate(app, db)
 
 @app.route("/")
 def index():
-    return 'This is an API project and use for data storage '+app.config['SQLALCHEMY_DATABASE_URI']
-
-@app.route("/token")
-def token():
-    from .base.jwtokens import Token
-    ten = Token.generate_token('giannis', 1000)
-    tde = Token.check_token(ten)
-    return ten+'='+tde
-
-@app.route("/email")
-def email():
-    from .base.email import Email
-    Email().send('[Your multiple choice!]', 'strunstrun@gmail.com', ['acycling@yahoo.gr'], 'Greeting from new App!')
-    return 'Check your email please'
+    return 'Multiple-choice project: python/flask back-end serving js/react front-end through RESTful APIs'
 
 from .base import bp as bp_base
 app.register_blueprint(bp_base)

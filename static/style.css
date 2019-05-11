@@ -10,14 +10,14 @@
 	color: inherit;
 	font: inherit;
 	text-decoration: none;
+	list-style-type: none;
 }
 
 a, button {
 	cursor: pointer;
 }
 
-
-/* body, container, header, main, footer */
+/* body, containers, header, main, footer */
 
 body {
 	--color-body: rgb(50, 25, 50);
@@ -31,24 +31,24 @@ body {
     font-size: 0.95em;
 }
 
-.container {
+.containerH {
 	width: 80%;
     margin-left: auto;
     margin-right: auto;
 
-	min-height: 100vh; /* allow child (.container2) to be centered vertical */
-	line-height: 100vh; /* allow child (.container2) to be centered vertical */
+	min-height: 100vh; /* allow child (.containerV) to be centered vertical */
+	line-height: 100vh; /* allow child (.containerV) to be centered vertical */
 }
 
-.container2 {
+.containerV {
 	width: 100%;
 	background-color: var(--color-form);
-	border-radius: 5% 5% 25% 5%;
     text-align: center;
 
-	display: inline-block; /* center vertical to parent (.container) */
-	line-height: normal; /* center vertical to parent (.container) */
-	vertical-align: middle; /* center vertical to parent (.container) */
+	display: inline-block; /* center vertical to parent (.containerH) */
+	line-height: normal; /* center vertical to parent (.containerH) */
+	vertical-align: middle; /* center vertical to parent (.containerH) */
+	position: relative;
 }
 
 main {
@@ -56,12 +56,12 @@ main {
 	line-height: 50vh; /* allow child (.form) to be centered vertical */
 }
 
-header, footer {
+header {
     text-align: center;
     height: 4em;
 }
 
-header *, footer * {
+header * {
 	display: inline-block;
 	margin-top: 1em;
 }
@@ -78,18 +78,39 @@ header .menu {
 	margin-left: 1em;
 }
 
-header .menu *, footer a {
+header .menu * {
 	margin: 0 .25em;
-	border-radius: 5% 5% 25% 5%;
+	border-radius: .15em .15em .75em .15em;
 	box-shadow: 1px 2px 4px var(--color-body);
 	padding: 0.25em;
 	background-color: var(--color-menu);
 }
 
-footer a {
-	font-size: .8em;
+header .menu *:hover {
+	box-shadow: 1px 2px 4px var(--color-menu);
 }
 
+.corner {
+	height: 9em; 
+	width: 9em;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
+.corner polygon {
+	fill: var(--color-menu);
+} 
+
+footer {
+	font-size: .8em;
+	-ms-transform: rotate(-45deg); /* IE 9 */
+	-webkit-transform: rotate(-45deg); /* Safari 3-8 */
+	transform: rotate(-45deg);
+	position: absolute;
+	bottom: 2.75em;
+	right: 0;
+}
 
 /* forms */
 
@@ -133,24 +154,22 @@ input:disabled, textarea:disabled {
 
 .form .panel * {
 	display: inline-block;
-	margin: 1em 0;
 }
 
 .form h2 {
 	color: var(--color-body);
-	/*text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;*/
 	font-size: 1.2em;
 	font-weight: 300;
-	/*font-style: italic;*/
 }
 
 .form .menu {
-	margin-left: 1em;
+	margin: 2em;
 }
 
-.form .menu * {
+.form .menu *,
+.form .search-results * {
 	margin: 0 .25em;
-	border-radius: 5% 5% 25% 5%;
+	border-radius: .15em .15em .75em .15em;
 	box-shadow: 1px 2px 4px var(--color-body);
 	border: 1px solid var(--color-menu);
 	padding: 0.25em;
@@ -160,7 +179,19 @@ input:disabled, textarea:disabled {
 	background-color: transparent;
 	cursor: default;
 }
+.form .menu *:hover,
+.form .search-results *:hover {
+	box-shadow: 1px 2px 4px var(--color-menu);
+}
 
+.form .search-results * {
+	margin-bottom: .75em;
+	cursor: pointer;
+}
+
+.form .search-results {
+	padding-bottom: .75em;
+}
 
 /* test form's questions and answers */
 
@@ -168,12 +199,17 @@ input:disabled, textarea:disabled {
 .add-answer {
 	margin: .5em 0;
 	padding: 0 .75em;
-	border-radius: 5% 5% 25% 5%;
+	border-radius: .15em .15em .75em .15em;
 	box-shadow: 1px 2px 4px var(--color-body);
 	background-color: var(--color-menu);
 }
 
-.question, 
+.question {
+	border: 1px solid var(--color-menu);
+	margin: 1em 0;
+	padding: 1.5em 1.5em 0 1.5em;
+}
+
 .answer {
 	margin: .5em 0;
 }
@@ -203,12 +239,17 @@ input:disabled, textarea:disabled {
 	display: inline-block;
 }
 
+.question .part1 button,
+.answer .part1 button {
+	width: .75em;
+}
+
 input[name=is_correct] {
 	margin-right: .5em;
 	width: initial;
 }
 
-.question .part2 {width: calc(100% - 4em);}
+.question .part2 {width: calc(100% - 3em);}
 .answer .part2 {width: calc(100% - 5em);}
 
 .question .part3 > *, 

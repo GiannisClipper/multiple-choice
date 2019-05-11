@@ -8,8 +8,6 @@ class WorksForm extends WorksQuestionsAnswersLogic {
     render() {
         return (
             <div className="form">
-                <div className="topLeft"></div>
-                <div className="bottomRight"></div>
 
                 <div className="data">
                     <Work 
@@ -76,8 +74,7 @@ class Work extends React.Component {
             disabled = {!this.props.editable}
         />
 
-        this.labelSearchResults = () => <label>Search results</label>
-        this.searchResults = () => <ul>
+        this.searchResults = () => <ul className="search-results">
             {this.props.searchResults.map((x, i) => 
                 <li onClick = {() => this.props.okReadClick(x.id)}>
                     {x.title}
@@ -108,9 +105,8 @@ class Work extends React.Component {
         return (
             (this.props.mode=='search')?(
                 <div className="work">
-                    {this.inputTitle()}
-                    {this.labelSearchResults()}
                     {this.searchResults()}
+                    {this.inputTitle()}
                 </div>
             ):(this.props.mode)?(
                 <div className="work">
