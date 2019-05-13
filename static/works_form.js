@@ -367,19 +367,19 @@ class AnswerPart1 extends React.Component {
                 </div>
 
                 <div className="index">
-                {(this.props.editable && this.props.index>0)?(
-                    <button 
-                        onClick = {() => this.props.moveUpAnswer(this.props.questIndex, this.props.index)}
-                        disabled = {!this.props.editable}
-                    >&#8673;</button>
-                ):null}
+                    {(this.props.editable && this.props.index>0)?(
+                        <button 
+                            onClick = {() => this.props.moveUpAnswer(this.props.questIndex, this.props.index)}
+                            disabled = {!this.props.editable}
+                        >&#8673;</button>
+                    ):null}
 
-                {(this.props.editable && this.props.index<this.props.total-1)?(
-                    <button 
-                        onClick = {() => this.props.moveDownAnswer(this.props.questIndex, this.props.index)}
-                        disabled = {!this.props.editable}
-                    >&#8675;</button>
-                ):null}
+                    {(this.props.editable && this.props.index<this.props.total-1)?(
+                        <button 
+                            onClick = {() => this.props.moveDownAnswer(this.props.questIndex, this.props.index)}
+                            disabled = {!this.props.editable}
+                        >&#8675;</button>
+                    ):null}
                 </div>
             </div>
         )

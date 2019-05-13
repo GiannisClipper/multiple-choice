@@ -103,7 +103,7 @@ class ProfileLogic extends GenericForm {
         await request(`${document.globals.origin}/users/${document.globals.user_id}`, 'PUT', document.globals.token, this.state.fields,
             (status, data) => {
                 this.setSavedFields(data);
-                this.setState({editable:true});
+                this.setState({editable:true, changed:false});
             },
             (status, message) => {
                 this.setState({editable:true});
@@ -127,10 +127,10 @@ class ProfileLogic extends GenericForm {
     }
 
     async revertClick(event) {
-        this.setState({fields:this.getSavedFields()});
+        this.setState({fields:this.getSavedFields(), changed:false});
     }
 
     async cancelClick(event) {
-        this.setState({mode:'read', editable:false, fields:this.getSavedFields()});
+        this.setState({mode:'read', editable:false, fields:this.getSavedFields(), changed:false});
     }
 }

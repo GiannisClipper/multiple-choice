@@ -1,57 +1,69 @@
+class RunMenu extends React.Component {
+    //renders Run menu options (search, run and check a multiple-choice test)
+
+    render() {
+        return (
+            (this.props.mode=='search')?(
+                <div className="menu">
+                <button onClick={this.props.okSearchClick}>Search</button>
+                <button onClick={this.props.closeClick}>Close</button>
+                </div>
+            ):(this.props.mode=='run')?(
+                <div className="menu">
+                <button onClick={this.props.checkClick}>Check</button>
+                <button onClick={this.props.searchClick}>Cancel</button>
+                </div>
+            ):(this.props.mode=='check')?(
+                <div className="menu">
+                <button onClick={this.props.closeClick}>Close</button>
+                </div>
+            ):null
+        )
+    }
+}
+
+
 class RunWorksForm extends RunWorksQuestionsAnswersLogic {
-    //renders Work form to run (inherites all form functionality)
+    //renders Run form (inherites all form functionality)
 
     constructor(props) {
         super(props);
+
+        this.savedFields = this.initFields();
+        this.savedFields['title'] = '%';
+        this.state.mode = 'search';
+        this.state.fields = this.getSavedFields();
+        this.state.editable = true;
     }
 
     render() {
         return (
             <div className="form">
-                <div className="topLeft"></div>
-                <div className="bottomRight"></div>
 
                 <div className="data">
-                    <Work 
+                    <RunWork 
                         mode = {this.state.mode}
                         fields = {this.state.fields}
-                        inputChange = {this.inputChange.bind(this)} 
+                        inputChange = {this.inputChange.bind(this)}
                         editable = {this.state.editable}
 
                         searchResults = {this.state.searchResults}
                         okReadClick = {this.okReadClick.bind(this)} 
 
-                        addQuestion = {this.addQuestion.bind(this)}
-                        changeQuestion = {this.changeQuestion.bind(this)} 
-                        moveUpQuestion = {this.moveUpQuestion.bind(this)}
-                        moveDownQuestion = {this.moveDownQuestion.bind(this)} 
-                        removeQuestion = {this.removeQuestion.bind(this)}
-
-                        addAnswer = {this.addAnswer.bind(this)}
                         changeAnswer = {this.changeAnswer.bind(this)}
-                        moveUpAnswer = {this.moveUpAnswer.bind(this)}
-                        moveDownAnswer = {this.moveDownAnswer.bind(this)} 
-                        removeAnswer = {this.removeAnswer.bind(this)} 
                     />
                 </div>
                 
                 <div className="panel">
                     <h2>{this.props.title}</h2>
 
-                    <CRUDMenu
+                    <RunMenu
                         mode = {this.state.mode}
                         changed = {this.state.changed}
-                        createClick = {this.createClick.bind(this)}
                         searchClick = {this.searchClick.bind(this)}
-                        updateClick = {this.updateClick.bind(this)}
-                        deleteClick = {this.deleteClick.bind(this)}
                         closeClick = {this.props.handleMenu}
-                        okCreateClick = {this.okCreateClick.bind(this)}
                         okSearchClick = {this.okSearchClick.bind(this)}
-                        okUpdateClick = {this.okUpdateClick.bind(this)}
-                        okDeleteClick = {this.okDeleteClick.bind(this)}
-                        revertClick = {this.revertClick.bind(this)}
-                        cancelClick = {this.cancelClick.bind(this)}
+                        checkClick = {this.checkClick.bind(this)}
                     />
                 </div>
 
@@ -62,7 +74,7 @@ class RunWorksForm extends RunWorksQuestionsAnswersLogic {
 
 
 class RunWork extends React.Component {
-    //renders data part of RunWork form
+    //renders data part of Run form
 
     constructor(props) {
         super(props);
@@ -72,12 +84,11 @@ class RunWork extends React.Component {
             name = "title"
             placeholder = "Work title..."
             value = {this.props.fields.title} 
-            onChange = {this.props.inputChange} 
+            onChange = {this.props.inputChange}
             disabled = {!this.props.editable}
         />
 
-        this.labelSearchResults = () => <label>Search results</label>
-        this.searchResults = () => <ul>
+        this.searchResults = () => <ul className="search-results">
             {this.props.searchResults.map((x, i) => 
                 <li onClick = {() => this.props.okReadClick(x.id)}>
                     {x.title}
@@ -85,21 +96,10 @@ class RunWork extends React.Component {
             )}
         </ul>
 
-        this.questionsList = () => <QuestionsList
+        this.questionsList = () => <RunQuestionsList
+            mode = {this.props.mode}
             questions = {this.props.fields.questions}
-
-            addQuestion = {this.props.addQuestion}
-            changeQuestion = {this.props.changeQuestion}
-            moveUpQuestion = {this.props.moveUpQuestion}
-            moveDownQuestion = {this.props.moveDownQuestion}
-            removeQuestion = {this.props.removeQuestion}
-
-            addAnswer = {this.props.addAnswer}
             changeAnswer = {this.props.changeAnswer}
-            moveUpAnswer = {this.props.moveUpAnswer}
-            moveDownAnswer = {this.props.moveDownAnswer}
-            removeAnswer = {this.props.removeAnswer}
-
             editable = {this.props.editable}
         />
     }
@@ -108,13 +108,12 @@ class RunWork extends React.Component {
         return (
             (this.props.mode=='search')?(
                 <div className="work">
-                    {this.inputTitle()}
-                    {this.labelSearchResults()}
                     {this.searchResults()}
+                    {this.inputTitle()}
                 </div>
             ):(this.props.mode)?(
                 <div className="work">
-                    {this.inputTitle()}
+                    <div>{this.props.fields.title}</div>
                     {this.questionsList()}
                 </div>
             ):null
@@ -123,8 +122,8 @@ class RunWork extends React.Component {
 }
 
 
-class QuestionsList extends React.Component {
-    //renders Questions list 
+class RunQuestionsList extends React.Component {
+    //renders Questions list for Run form
 
     render() {
         const total = this.props.questions.length;
@@ -132,128 +131,77 @@ class QuestionsList extends React.Component {
         return (
             <ul>
             {this.props.questions.map((item, index) => 
-                <Question 
+                <RunQuestion 
+                    mode = {this.props.mode}
                     key = {index}
                     index = {index}
                     total = {total}
 
                     question = {item}
-                    changeQuestion = {this.props.changeQuestion}
-                    moveUpQuestion = {this.props.moveUpQuestion}
-                    moveDownQuestion = {this.props.moveDownQuestion}
-                    removeQuestion = {this.props.removeQuestion}
-
-                    addAnswer = {this.props.addAnswer}
                     changeAnswer = {this.props.changeAnswer}
-                    moveUpAnswer = {this.props.moveUpAnswer}
-                    moveDownAnswer = {this.props.moveDownAnswer}
-                    removeAnswer = {this.props.removeAnswer}
-
                     editable = {this.props.editable}
                 />
             )}
-            
-            {(this.props.editable && total<12)?(
-                <button
-                    className = "add-question"
-                    onClick = {() => this.props.addQuestion()}
-                    disabled = {!this.props.editable}
-                >+ Question</button>
-            ):null}
-
             </ul>
         )
     }
 }
 
 
-class Question extends React.Component {
-    //renders Question item 
+class RunQuestion extends React.Component {
+    //renders Question item for Run form
 
     render() {
         return (
             <div className="question">
-                <QuestionPart1
+                <RunQuestionPart1
                     index = {this.props.index}
                     total = {this.props.total}
-                    moveUpQuestion = {this.props.moveUpQuestion}
-                    moveDownQuestion = {this.props.moveDownQuestion}
-                    editable = {this.props.editable}
                 />
 
-                <QuestionPart2
+                <RunQuestionPart2
+                    mode = {this.props.mode}
                     index = {this.props.index}
                     question = {this.props.question}
-                    changeQuestion = {this.props.changeQuestion}
                     editable = {this.props.editable}
-
-                    addAnswer = {this.props.addAnswer}
                     changeAnswer = {this.props.changeAnswer}
-                    moveUpAnswer = {this.props.moveUpAnswer}
-                    moveDownAnswer = {this.props.moveDownAnswer}
-                    removeAnswer = {this.props.removeAnswer}
                 />
 
-                <QuestionPart3
+                <RunQuestionPart3
                     index = {this.props.index}
-                    removeQuestion = {this.props.removeQuestion}
-                    editable = {this.props.editable}
                 />
             </div>
         )
     }
 }
 
-class QuestionPart1 extends React.Component {
-    //renders part of Answer item 
+class RunQuestionPart1 extends React.Component {
+    //renders part of Answer item for Run form
 
     render() {
         return (
             <div className="part1">
-                <div className="index">
-                    {this.props.index+1}
+                <div>
+                    {this.props.index+1})
                 </div>
-
-                {(this.props.editable && this.props.index>0)?(
-                    <button
-                        onClick = {() => this.props.moveUpQuestion(this.props.index)}
-                        disabled = {!this.props.editable}
-                    >&#8673;</button>
-                ):null}
-
-                {(this.props.editable && this.props.index<this.props.total-1)?(
-                    <button 
-                        onClick = {() => this.props.moveDownQuestion(this.props.index)}
-                        disabled = {!this.props.editable}
-                    >&#8675;</button>
-                ):null}
             </div>
         )
     }
 }
 
-class QuestionPart2 extends React.Component {
-    //renders part of Answer item 
+class RunQuestionPart2 extends React.Component {
+    //renders part of Answer item for Run form
 
     render() {
         return (
             <div className="part2">
-                <textarea
-                    name = 'question'
-                    placeholder = 'Question...'
-                    value = {this.props.question.question}
-                    onChange = {(event) => this.props.changeQuestion(event, this.props.index)}
-                    disabled = {!this.props.editable}
-                />
+                <pre>{this.props.question.question}</pre>
 
-                <AnswersList
+                <RunAnswersList
+                    mode = {this.props.mode}
                     questIndex = {this.props.index}
                     answers = {this.props.question.answers}
-                    addAnswer = {this.props.addAnswer}
                     changeAnswer = {this.props.changeAnswer}
-                    moveUpAnswer = {this.props.moveUpAnswer}
-                    moveDownAnswer = {this.props.moveDownAnswer}
-                    removeAnswer = {this.props.removeAnswer}
                     editable = {this.props.editable}
                 />
             </div>
@@ -261,25 +209,19 @@ class QuestionPart2 extends React.Component {
     }
 }
 
-class QuestionPart3 extends React.Component {
-    //renders part of Answer item 
+class RunQuestionPart3 extends React.Component {
+    //renders part of Answer item for Run form
 
     render() {
         return (
             <div className="part3">
-                {(this.props.editable)?(
-                    <button 
-                        onClick = {() => this.props.removeQuestion(this.props.index)}
-                        disabled = {!this.props.editable}
-                    >&#10007;</button>
-                ):null}
             </div>
         )
     }
 }
 
-class AnswersList extends React.Component {
-    //renders Answers list 
+class RunAnswersList extends React.Component {
+    //renders Answers list for Run form
 
     render() {
         const total = this.props.answers.length;
@@ -287,139 +229,103 @@ class AnswersList extends React.Component {
         return (
             <ul>
             {this.props.answers.map((item, index) => 
-                <Answer 
+                <RunAnswer 
+                    mode = {this.props.mode}
                     key = {index}
                     questIndex = {this.props.questIndex}
                     index = {index}
                     total = {total}
                     answer = {item}
                     changeAnswer = {this.props.changeAnswer}
-                    moveUpAnswer = {this.props.moveUpAnswer}
-                    moveDownAnswer = {this.props.moveDownAnswer}
-                    removeAnswer = {this.props.removeAnswer}
                     editable = {this.props.editable}
                 />
             )}
-
-            {(this.props.editable && total<8)?(
-                <button
-                    className = "add-answer"
-                    onClick = {() => this.props.addAnswer(this.props.questIndex)}
-                    disabled = {!this.props.editable}
-                >+ Answer</button>
-            ):null}
-
             </ul>
         )
     }
 }
 
 
-class Answer extends React.Component {
-    //renders Answer item 
+class RunAnswer extends React.Component {
+    //renders Answer item for Run form
 
     render() {
         return (
             <div className="answer">
-                <AnswerPart1
+                <RunAnswerPart1
+                    mode = {this.props.mode}
                     questIndex = {this.props.questIndex}
                     index = {this.props.index}
                     total = {this.props.total}
                     answer = {this.props.answer}
                     changeAnswer = {this.props.changeAnswer}
-                    moveUpAnswer = {this.props.moveUpAnswer}
-                    moveDownAnswer = {this.props.moveDownAnswer}
                     editable = {this.props.editable}
                 />
 
-                <AnswerPart2
+                <RunAnswerPart2
                     questIndex = {this.props.questIndex}
                     index = {this.props.index}
                     answer = {this.props.answer}
-                    changeAnswer = {this.props.changeAnswer}
-                    editable = {this.props.editable}
                 />
 
-                <AnswerPart3
+                <RunAnswerPart3
                     questIndex = {this.props.questIndex}
                     index = {this.props.index}
-                    removeAnswer = {this.props.removeAnswer}
-                    editable = {this.props.editable}
                 />
             </div>
         )
     }
 }
 
-class AnswerPart1 extends React.Component {
-    //renders part of Answer item 
+class RunAnswerPart1 extends React.Component {
+    //renders part of Answer item for Run form
 
     render() {
         return (
             <div className="part1">
                 <div className="index">
+
+                    {(this.props.mode=='check')?(
+                        (this.props.answer.is_correct)?(
+                            <span className="result">&#x2713;</span>):(
+                            <span className="result">&#x2715;</span>)
+                    ):null}
+
                     <input
                         type = "checkbox"
-                        name = "is_correct"
-                        value = {this.props.answer.is_correct}
-                        checked = {this.props.answer.is_correct}
+                        name = "is_selected"
+                        value = {this.props.answer.is_selected}
+                        checked = {this.props.answer.is_selected}
                         onChange = {(event) => this.props.changeAnswer(event, this.props.questIndex, this.props.index)}
                         disabled = {!this.props.editable}
                     />
-
-                    {'ABCDEFGH'.substring(this.props.index, this.props.index+1)}
+                    
+                    <span>{'ABCDEFGH'.substring(this.props.index, this.props.index+1)})</span>
                 </div>
 
-                <div className="index">
-                {(this.props.editable && this.props.index>0)?(
-                    <button 
-                        onClick = {() => this.props.moveUpAnswer(this.props.questIndex, this.props.index)}
-                        disabled = {!this.props.editable}
-                    >&#8673;</button>
-                ):null}
-
-                {(this.props.editable && this.props.index<this.props.total-1)?(
-                    <button 
-                        onClick = {() => this.props.moveDownAnswer(this.props.questIndex, this.props.index)}
-                        disabled = {!this.props.editable}
-                    >&#8675;</button>
-                ):null}
-                </div>
             </div>
         )
     }
 }
 
-class AnswerPart2 extends React.Component {
-    //renders part of Answer item 
+class RunAnswerPart2 extends React.Component {
+    //renders part of Answer item for Run form
 
     render() {
         return (
             <div className="part2">
-                <textarea
-                    name = "answer"
-                    placeholder = "Answer... (mark on the left if correct)"
-                    value = {this.props.answer.answer}
-                    onChange = {(event) => this.props.changeAnswer(event, this.props.questIndex, this.props.index)}
-                    disabled = {!this.props.editable}
-                />
+                <pre>{this.props.answer.answer}</pre>
             </div>
         )
     }
 }
 
-class AnswerPart3 extends React.Component {
-    //renders part of Answer item 
+class RunAnswerPart3 extends React.Component {
+    //renders part of Answer item for Run form 
 
     render() {
         return (
             <div className="part3">
-                {(this.props.editable)?(
-                    <button 
-                        onClick = {() => this.props.removeAnswer(this.props.questIndex, this.props.index)}
-                        disabled = {!this.props.editable}
-                    >&#10007;</button>
-                ):null}
             </div>
         )
     }

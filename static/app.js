@@ -26,10 +26,11 @@ class App extends React.Component {
                     </header>
 
                     <main>
+                        {this.state.menuSelection==='Run' && <RunWorksForm title={this.state.menuSelection} handleMenu={this.handleMenu.bind(this)} />}
                         {this.state.menuSelection==='Signup' && <SignupForm title={this.state.menuSelection} handleMenu={this.handleMenu.bind(this)} />}
                         {this.state.menuSelection==='Login' && <LoginForm title={this.state.menuSelection} handleMenu={this.handleMenu.bind(this)} />}
-                        {this.state.menuSelection==='Profile' && <ProfileForm title={this.state.menuSelection} handleMenu={this.handleMenu.bind(this)} />}
                         {this.state.menuSelection==='Works' && <WorksForm title={this.state.menuSelection} handleMenu={this.handleMenu.bind(this)} />}
+                        {this.state.menuSelection==='Profile' && <ProfileForm title={this.state.menuSelection} handleMenu={this.handleMenu.bind(this)} />}
                         {this.state.menuSelection==='Logout' && <LogoutForm title={this.state.menuSelection} handleMenu={this.handleMenu.bind(this)} />}
                     </main>
 
@@ -45,4 +46,35 @@ class App extends React.Component {
         )
     }
   
+}
+
+
+class LogoutMenu extends React.Component {
+    //renders menu options when user NOT logged in
+
+    render() {
+        return (
+            <div className="menu">
+                <button onClick={this.props.onClick} value="Run">Run</button>
+                <button onClick={this.props.onClick} value="Login">Login</button>
+                <button onClick={this.props.onClick} value="Signup">Signup</button>
+            </div>
+        )
+    }
+}
+
+
+class LoginMenu extends React.Component {
+    //renders menu options when user logged in
+
+    render() {
+        return (
+            <div className="menu">
+                <button onClick={this.props.onClick} value="Run">Run</button>
+                <button onClick={this.props.onClick} value="Works">Works</button>
+                <button onClick={this.props.onClick} value="Profile">Profile</button>
+                <button onClick={this.props.onClick} value="Logout">Logout</button>
+            </div>
+        )
+    }
 }
