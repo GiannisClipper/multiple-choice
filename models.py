@@ -150,7 +150,7 @@ class Works(db.Model, SingleRecordAPI, ListAPI, PaginatedListAPI):
     updated_at = db.Column(db.DateTime) #, index=True, default=datetime.utcnow)
 
     def get_user(self):
-        return User.query.filter_by(id=self.user_id).first()
+        return Users.query.filter_by(id=self.user_id).first()
 
     def get_questions(self):
         return Questions.query.filter_by(work_id=self.id).all()
@@ -171,7 +171,8 @@ class Works(db.Model, SingleRecordAPI, ListAPI, PaginatedListAPI):
             'questions_count': self.get_questions_count(),
             '_links': {
                 'self': url_for('works.read_work', id=self.id)
-            }
+            },
+            'repr': f'{self.get_user().username}: {self.title}'
         }
 
         data['questions'] = []

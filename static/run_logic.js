@@ -30,7 +30,7 @@ class RunWorksLogic extends GenericForm {
     constructor(props){
         super(props);
 
-        this.initFields = () => {return {id:null, title:'', questions:[]}}
+        this.initFields = () => {return {id:null, title:'', repr:'', questions:[]}}
         this.state.fields = this.initFields();
         this.state.searchResults = [];
     }
@@ -46,7 +46,7 @@ class RunWorksLogic extends GenericForm {
         await request(`${document.globals.origin}/works?title=${this.state.fields.title}`, 'GET', document.globals.token, null,
             (status, data) => {
                 let searchResults = [];
-                data.items.forEach(x => searchResults.push({id:x.id, title:x.title}));
+                data.items.forEach(x => searchResults.push({id:x.id, title:x.repr}));
                 this.setState({searchResults:searchResults, editable:true});
             },
             (status, message) => {

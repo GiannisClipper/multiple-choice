@@ -117,7 +117,7 @@ class RunWork extends React.Component {
                 </div>
             ):(this.props.mode)?(
                 <div className="work">
-                    <div>{this.props.fields.title}</div>
+                    <div>{this.props.fields.repr}</div>
                     {this.questionsList()}
                 </div>
             ):null
