@@ -33,6 +33,10 @@ class WorksForm extends WorksQuestionsAnswersLogic {
                     />
                 </div>
                 
+                <Message 
+                    message = {this.state.message}
+                />
+
                 <div className="panel">
                     <h2>{this.props.title}</h2>
 

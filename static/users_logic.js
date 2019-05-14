@@ -16,7 +16,7 @@ class SignupLogic extends GenericForm {
                 this.setState({editable:true})
             },
             (status, message) => {
-                this.setState({editable:true});
+                this.setState({message:message, editable:true});
             }        
         );
     }
@@ -45,7 +45,7 @@ class LoginLogic extends GenericForm {
                 this.setState({editable:true})
             },
             (status, message) => {
-                this.setState({editable:true});
+                this.setState({message:message.error, editable:true});
             }        
         );
     }
@@ -106,7 +106,7 @@ class ProfileLogic extends GenericForm {
                 this.setState({editable:true, changed:false});
             },
             (status, message) => {
-                this.setState({editable:true});
+                this.setState({message:message, editable:true});
             }        
         );
     }
@@ -121,7 +121,7 @@ class ProfileLogic extends GenericForm {
                 this.props.handleMenu();
             },
             (status, message) => {
-                this.setState({editable:true});
+                this.setState({message:message, editable:true});
             }
         );
     }

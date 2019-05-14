@@ -49,7 +49,7 @@ async function request(url='', method, token=null, data={}, onSuccess=null, onFa
 
     //handle errors
     } catch(err) { 
-        alert(err.status+':'+JSON.stringify(err.message));
+        //alert(err.status+':'+JSON.stringify(err.message));
         onFail && onFail(err.status, err.message);
     }
 

@@ -53,7 +53,11 @@ class RunWorksForm extends RunWorksQuestionsAnswersLogic {
                         changeAnswer = {this.changeAnswer.bind(this)}
                     />
                 </div>
-                
+
+                <Message 
+                    message = {this.state.message}
+                />
+
                 <div className="panel">
                     <h2>{this.props.title}</h2>
 
@@ -152,8 +156,10 @@ class RunQuestion extends React.Component {
     //renders Question item for Run form
 
     render() {
+        const error = this.props.mode=='check' && !questionResult(this.props.question);
+
         return (
-            <div className="question">
+            <div className={"question"+(error?" error":"")}>
                 <RunQuestionPart1
                     index = {this.props.index}
                     total = {this.props.total}

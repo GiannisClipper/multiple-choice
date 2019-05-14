@@ -26,7 +26,7 @@ class ListAPI:
             data = {'items': [item.serialize() for item in result.all()]}
             return Response(json.dumps(data), status=200, mimetype='application/json')
         else:
-            return errors.error(404, 'No such a record')
+            return errors.error(404, 'No record found')
 
 
 

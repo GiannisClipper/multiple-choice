@@ -194,8 +194,13 @@ class Works(db.Model, SingleRecordAPI, ListAPI, PaginatedListAPI):
 
     @classmethod
     def query_filtered(cls, request):
-        if 'title' in request.args.keys() or 'user_id' in request.args.keys():
-            return cls.query.filter(cls.title.like(request.args['title'])).filter_by(user_id=request.args['user_id'])
+        if 'user_id' in request.args.keys() and cls.query.filter(user_id=request.args['user_id']).first().is_admin():
+            del request.args['user_id']
+            
+        if 'user_id' in request.args.keys() and 'title' in request.args.keys():
+            return cls.query.filter_by(user_id=request.args['user_id']).filter(cls.title.like(request.args['title']))
+        elif 'title' in request.args.keys():
+            return cls.query.filter(cls.title.like(request.args['title']))
         else:
             return cls.query
 

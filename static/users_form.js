@@ -39,6 +39,10 @@ class SignupForm extends SignupLogic {
                     />
                 </div>
 
+                <Message 
+                    message = {this.state.message}
+                />
+
                 <div className="panel">
                     <h2>{this.props.title}</h2>
 
@@ -76,14 +80,18 @@ class LoginForm extends LoginLogic {
                         onChange = {this.inputChange.bind(this)} 
                         disabled = {!this.state.editable}
                     />
+                </div>
+    
+                <Message 
+                    message = {this.state.message}
+                />
 
-                    <div className="panel">
-                        <h2>{this.props.title}</h2>
+                <div className="panel">
+                    <h2>{this.props.title}</h2>
 
-                        <div className="menu">
-                            <button onClick = {this.okClick.bind(this)}>OK</button>
-                            <button onClick = {this.props.handleMenu}>Cancel</button>
-                        </div>
+                    <div className="menu">
+                        <button onClick = {this.okClick.bind(this)}>OK</button>
+                        <button onClick = {this.props.handleMenu}>Cancel</button>
                     </div>
                 </div>
             </div>
@@ -99,6 +107,10 @@ class LogoutForm extends LogoutLogic {
     render() {
         return (
             <div className="form">
+                <Message 
+                    message = {this.state.message}
+                />
+
                 <div className="panel">
                     <h2>{this.props.title}</h2>
 
@@ -178,6 +190,10 @@ class ProfileForm extends ProfileLogic {
                         disabled = {true}
                     />
                 </div>
+
+                <Message 
+                    message = {this.state.message}
+                />
 
                 <div className="panel">
                     <h2>{this.props.title}</h2>

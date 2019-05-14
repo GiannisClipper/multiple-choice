@@ -35,7 +35,7 @@ class WorksLogic extends GenericForm {
                 this.setState({mode:'update', fields:this.getSavedFields(), changed:false, editable:true});
             },
             (status, message) => {
-                this.setState({editable:true});
+                this.setState({message:message, editable:true});
             }        
         );
     }
@@ -44,14 +44,12 @@ class WorksLogic extends GenericForm {
         await this.setState({editable:false});
         await request(`${document.globals.origin}/works?title=${this.state.fields.title}&user_id=${document.globals.user_id}`, 'GET', document.globals.token, null,
             (status, data) => {
-                //this.setSavedFields(data.items[0]);
-                //this.setState({mode:'read', fields:this.getSavedFields()});
                 let searchResults = [];
                 data.items.forEach(x => searchResults.push({id:x.id, title:x.title}));
                 this.setState({searchResults:searchResults, editable:true});
             },
             (status, message) => {
-                this.setState({editable:true});
+                this.setState({message:message, editable:true});
             }        
         );
     }
@@ -64,7 +62,7 @@ class WorksLogic extends GenericForm {
                 this.setState({mode:'read', fields:this.getSavedFields()});
             },
             (status, message) => {
-                this.setState({editable:true});
+                this.setState({message:message, editable:true});
             }        
         );
     }
@@ -78,7 +76,7 @@ class WorksLogic extends GenericForm {
                 this.setState({editable:true, changed:false});
             },
             (status, message) => {
-                this.setState({editable:true});
+                this.setState({message:message, editable:true});
             }
         );
     }
@@ -90,7 +88,7 @@ class WorksLogic extends GenericForm {
                 this.setState({mode:null});
             },
             (status, message) => {
-                this.setState({editable:true});
+                this.setState({message:message, editable:true});
             }
         );
     }

@@ -1,3 +1,29 @@
+const workResult = (questions) => {
+    let result = {correct:0, fault:0};
+    let is_correct;
+    for (let i=0; i<questions.length; i++) {
+        is_correct = questionResult(questions[i]);
+        if (is_correct) {
+            result.correct += 1;
+        } else {
+            result.fault += 1;
+        }
+    }
+    return result;
+}
+
+const questionResult = (question) => {
+    let is_correct = true;
+    for (let i=0; i<question.answers.length; i++) {
+        if (question.answers[i].is_correct!=question.answers[i].is_selected) {
+            is_correct = false;
+            break;
+        }
+    }
+    return is_correct;
+}
+
+
 class RunWorksLogic extends GenericForm {
     //implements general functionality of the Run form
 
@@ -17,14 +43,14 @@ class RunWorksLogic extends GenericForm {
 
     async okSearchClick(event) {
         await this.setState({editable:false});
-        await request(`${document.globals.origin}/works?title=${this.state.fields.title}&user_id=${document.globals.user_id}`, 'GET', document.globals.token, null,
+        await request(`${document.globals.origin}/works?title=${this.state.fields.title}`, 'GET', document.globals.token, null,
             (status, data) => {
                 let searchResults = [];
                 data.items.forEach(x => searchResults.push({id:x.id, title:x.title}));
                 this.setState({searchResults:searchResults, editable:true});
             },
             (status, message) => {
-                this.setState({editable:true});
+                this.setState({message:message, editable:true});
             }        
         );
     }
@@ -38,13 +64,16 @@ class RunWorksLogic extends GenericForm {
                 this.setState({mode:'run', fields:this.getSavedFields(), editable:true});
             },
             (status, message) => {
-                this.setState({editable:true});
+                this.setState({message:message, editable:true});
             }        
         );
     }
 
     async checkClick(event) {
-        this.setState({mode:'check', editable:false});
+        const result = workResult(this.state.fields.questions);
+        const percent = result.correct/(result.correct+result.fault)*100;
+        const message = `Result: ${percent}% (${result.correct}/${result.correct+result.fault})`;
+        this.setState({mode:'check', message:message, editable:false});
     }
     
 }

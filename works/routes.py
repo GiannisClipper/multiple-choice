@@ -13,14 +13,11 @@ def create_work():
 
 @bp.route('/works', methods=['GET'])
 @cross_origin()
-@models.Users.login_required
 def read_works():
     return views.list(request)
 
 @bp.route('/works/<int:id>', methods=['GET'])
 @cross_origin()
-@models.Users.login_required
-@models.Works.identity_required
 def read_work(id):
     return views.read(id)
 

@@ -5,6 +5,7 @@ class GenericForm extends React.Component {
         super(props);
         this.initFields = () => {return {}};
         this.state = {
+            message: null,
             mode: null, //operation mode: create, search, read, update, delete
             editable: false, //make inputs editable or not
             fields: this.initFields(),
@@ -29,6 +30,28 @@ class GenericForm extends React.Component {
 
 }
 
+class Message extends React.Component {
+    //renders a box showing errors and messages
+
+    render() {
+        return (
+            (this.props.message)?(
+                <div className="message">
+                    {(typeof this.props.message=='string')?(
+                        <span>{this.props.message}</span>
+                    ):null}
+                    {(typeof this.props.message.error!='undefined')?(
+                        <span className="error">error {this.props.message.error}</span>
+                    ):null}
+                    {(typeof this.props.message.message!='undefined')?(
+                        this.props.message.message.map((item, index) => <span>{item}</span>)
+                    ):null}
+
+                </div>
+            ):null
+        )
+    }
+}
 
 class CRUDMenu extends React.Component {
     //renders Create, Read, Update, Delete menu options
