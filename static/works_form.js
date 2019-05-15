@@ -110,6 +110,7 @@ class Work extends React.Component {
             (this.props.mode=='search')?(
                 <div className="work">
                     {this.searchResults()}
+                    <label>Search works by title</label>
                     {this.inputTitle()}
                 </div>
             ):(this.props.mode)?(

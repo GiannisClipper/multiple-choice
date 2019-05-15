@@ -17,8 +17,7 @@ class SignupForm extends SignupLogic {
                     <input
                         type = "password"
                         name = "password" 
-                        onChange = 
-                        {this.inputChange.bind(this)} 
+                        onChange = {this.inputChange.bind(this)} 
                         disabled = {!this.state.editable}
                     />
 
@@ -46,10 +45,16 @@ class SignupForm extends SignupLogic {
                 <div className="panel">
                     <h2>{this.props.title}</h2>
 
-                    <div className="menu">
-                        <button onClick = {this.okClick.bind(this)}>OK</button>
-                        <button onClick = {this.props.handleMenu}>Cancel</button>
-                    </div>
+                    {(this.state.mode=='message')?(
+                        <div className="menu">
+                            <button onClick={this.okClick.bind(this)}>Login</button>
+                        </div>
+                    ):(
+                        <div className="menu">
+                            <button onClick = {this.okClick.bind(this)}>OK</button>
+                            <button onClick = {this.props.handleMenu}>Cancel</button>
+                        </div>
+                    )}
                 </div>
             </div>
         )
@@ -163,7 +168,7 @@ class ProfileForm extends ProfileLogic {
                         disabled = {!this.state.editable}
                     />
 
-                    <label>Password</label>
+                    <label>New password</label>
                     <input
                         type = "password"
                         name = "password" 
@@ -172,7 +177,7 @@ class ProfileForm extends ProfileLogic {
                         disabled = {!this.state.editable}
                     />
 
-                    <label>Repeat password</label>
+                    <label>Repeat new password</label>
                     <input
                         type = "password"
                         name = "password2" 

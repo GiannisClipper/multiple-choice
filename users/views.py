@@ -37,7 +37,8 @@ def create(request):
 
 def activate(token):
     if models.Users.check_activation_token(token):
-        response = Response(json.dumps({}), status=200, mimetype='application/json')
+        #response = Response(json.dumps({'message:'Account activated, ready to login'}), status=200, mimetype='application/json')
+        response = Response('Account activated, ready to login', status=200, mimetype='text/plain')
         return response
     else:
         return errors.error(404)
@@ -100,8 +101,8 @@ def update(id, request):
 def delete(id):
     user = models.Users.query.filter_by(id=id).first()
     if user:
-        for test in models.Tests.query.filter_by(user_id=user.id).all():
-            for question in models.Questions.query.filter_by(test_id=test.id).all():
+        for test in models.Works.query.filter_by(user_id=user.id).all():
+            for question in models.Questions.query.filter_by(work_id=work.id).all():
                 for answer in models.Answers.query.filter_by(question_id=question.id).all():
                     db.session.delete(answer)
                     db.session.commit()

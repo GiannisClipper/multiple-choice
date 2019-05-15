@@ -5,7 +5,7 @@ class RunMenu extends React.Component {
         return (
             (this.props.mode=='search')?(
                 <div className="menu">
-                <button onClick={this.props.okSearchClick}>Search</button>
+                <button onClick={this.props.okSearchClick}>OK</button>
                 <button onClick={this.props.closeClick}>Close</button>
                 </div>
             ):(this.props.mode=='run')?(
@@ -113,6 +113,7 @@ class RunWork extends React.Component {
             (this.props.mode=='search')?(
                 <div className="work">
                     {this.searchResults()}
+                    <label>Search works by title</label>
                     {this.inputTitle()}
                 </div>
             ):(this.props.mode)?(

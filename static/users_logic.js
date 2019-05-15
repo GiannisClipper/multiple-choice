@@ -3,22 +3,27 @@ class SignupLogic extends GenericForm {
 
     constructor(props) {
         super(props);
-        Object.assign(this.state, {editable:true, fields:{username:null, password:null, password2:null, email:null}});
+        Object.assign(this.state, {mode:null, editable:true, fields:{username:null, password:null, password2:null, email:null}});
     }
 
     async okClick(event){
-        await this.setState({editable:false});
-
-        let data = {username:this.state.fields.username, password:this.state.fields.password, password2:this.state.fields.password2, email:this.state.fields.email};
-        await request(`${document.globals.origin}/users`, 'POST', null, data,
-            (status, data) => {
-                this.props.handleMenu('Login'),
-                this.setState({editable:true})
-            },
-            (status, message) => {
-                this.setState({message:message, editable:true});
-            }        
-        );
+        if (this.state.mode=='message') {
+            this.props.handleMenu('Login'),
+            this.setState({message:message, editable:false})
+        } else {
+            await this.setState({editable:false});
+            let data = {username:this.state.fields.username, password:this.state.fields.password, password2:this.state.fields.password2, email:this.state.fields.email};
+            await request(`${document.globals.origin}/users`, 'POST', null, data,
+                (status, data) => {
+                    //this.props.handleMenu('Login'),
+                    let message = 'Check your email to activate the new account'
+                    this.setState({mode:'message', message:message, editable:false})
+                },
+                (status, message) => {
+                    this.setState({message:message, editable:true});
+                }        
+            );
+        }
     }
 
 }

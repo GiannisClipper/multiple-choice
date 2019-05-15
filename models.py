@@ -172,7 +172,7 @@ class Works(db.Model, SingleRecordAPI, ListAPI, PaginatedListAPI):
             '_links': {
                 'self': url_for('works.read_work', id=self.id)
             },
-            'repr': f'{self.get_user().username}: {self.title}'
+            'repr': f'{self.title} (by {self.get_user().username})'
         }
 
         data['questions'] = []
@@ -195,7 +195,7 @@ class Works(db.Model, SingleRecordAPI, ListAPI, PaginatedListAPI):
 
     @classmethod
     def query_filtered(cls, request):
-        if 'user_id' in request.args.keys() and cls.query.filter(user_id=request.args['user_id']).first().is_admin():
+        if 'user_id' in request.args.keys() and Users.query.filter_by(id=request.args['user_id']).first().is_admin():
             del request.args['user_id']
             
         if 'user_id' in request.args.keys() and 'title' in request.args.keys():

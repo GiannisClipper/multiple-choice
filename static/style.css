@@ -57,6 +57,7 @@ main {
 }
 
 header {
+	margin-bottom: 1em;
     text-align: center;
     height: 4em;
 }
@@ -145,6 +146,17 @@ footer {
 
 .form .data > * {
 	display: block;
+}
+
+.form.home .data {
+	padding-bottom: 2em;
+}
+
+.form.home .data * {
+	font-size: .8em;
+	text-indent: 1em;
+	text-align: justify;
+	padding-bottom: 1em;
 }
 
 input, textarea {
@@ -284,4 +296,93 @@ input[name=is_selected] {
 .answer .part3 > * {
 	padding: 0 0 0 .25em;
 	display: block;
+}
+
+
+/* responsive design
+
+/* Extra small devices (phones, 420px and down) */
+@media only screen and (max-width: 420px) {
+	body {
+		font-size: 0.9em;
+	}
+
+	.containerH {
+		width: 100%;
+	}
+
+	header > * {
+		display: block;
+	}
+
+	.form .data,
+	.form .message,
+	.form .panel {
+		width: 20em;
+	}
+
+	.form .panel {
+		padding-bottom: 7em; /* to control hiding from corner */
+	}	
+}
+
+/* Small devices (phones, 420px and up) */
+@media only screen and (min-width: 420px) {
+	.containerH {
+		width: 100%;
+	}
+
+	header > * {
+		display: block;
+	}
+
+	.form .data,
+	.form .message,
+	.form .panel {
+		width: 25em;
+	}	
+
+	.form .panel {
+		padding-bottom: 7em; /* to control hiding from corner */
+	}	
+}
+  
+/* Small devices (portrait tablets and large phones, 640px and up) */
+@media only screen and (min-width: 640px) {
+	.containerH {
+		width: 90%;
+	}
+
+	header > * {
+		display: inline-block;
+	}
+
+	.form .data,
+	.form .message,
+	.form .panel {
+		width: 30em;
+	}	
+
+	.form .panel {
+		padding-bottom: 0; /* to control hiding from corner */
+	}	
+}
+   
+/* Medium devices (landscape tablets, 768px and up) 
+@media only screen and (min-width: 768px) {
+
+} */
+   
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+	.containerH {
+		width: 80%;
+	}
+}
+   
+/* Extra large devices (large laptops and desktops, 1200px and up) */ 
+@media only screen and (min-width: 1200px) {
+	.containerH {
+		width: 70%;
+	}
 }
