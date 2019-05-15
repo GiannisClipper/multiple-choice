@@ -14,7 +14,7 @@ from config import Config
 app.config.from_object(Config)
 app.current_user = None
 
-console.log('!!!!!!!!!')
+print('!!!!!!!!!')
 
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy(app)
