@@ -10,7 +10,7 @@ from flask import Flask
 
 app = Flask(__name__, instance_relative_config=True)
 
-from .config import Config
+from config import Config
 app.config.from_object(Config)
 app.current_user = None
 
