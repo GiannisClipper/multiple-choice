@@ -10,7 +10,7 @@ from flask import Flask
 
 app = Flask(__name__, instance_relative_config=True)
 
-from config import Config
+from __init__.config import Config
 app.config.from_object(Config)
 app.current_user = None
 
@@ -26,13 +26,13 @@ migrate = Migrate(app, db)
 def index():
     return 'Multiple-choice project\'s back-end: RESTful API developed in python/flask, using SQL database and responding in JSON format...'
 
-from base import bp as bp_base
+from __init__.base import bp as bp_base
 app.register_blueprint(bp_base)
 
-from users import bp as bp_users
+from __init__.users import bp as bp_users
 app.register_blueprint(bp_users, url_prefix='/api/v1')
 
-from works import bp as bp_works
+from __init__.works import bp as bp_works
 app.register_blueprint(bp_works, url_prefix='/api/v1')
 
 
