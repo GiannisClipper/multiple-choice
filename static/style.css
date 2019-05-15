@@ -154,6 +154,7 @@ footer {
 
 .form.home .data * {
 	font-size: .8em;
+	opacity: .8;
 	text-indent: 1em;
 	text-align: justify;
 	padding-bottom: 1em;

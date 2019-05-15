@@ -1,4 +1,5 @@
 #pip install flask
+#pip install psycopg2 (postgreSQL)
 #pip install flask_sqlalchemy
 #pip install flask_migrate
 #pip install flask_cors
@@ -21,7 +22,7 @@ migrate = Migrate(app, db)
 
 @app.route("/")
 def index():
-    return 'Multiple-choice project: python/flask back-end serving js/react front-end through RESTful APIs'
+    return 'Multiple-choice project\'s back-end: RESTful API developed in python/flask, using SQL database and responding in JSON format...'
 
 from .base import bp as bp_base
 app.register_blueprint(bp_base)

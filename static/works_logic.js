@@ -68,7 +68,6 @@ class WorksLogic extends GenericForm {
     }
 
     async okUpdateClick(event) {
-        console.log(this.state.fields==this.getSavedFields());
         await this.setState({editable:false});
         await request(`${document.globals.origin}/works/${this.state.fields.id}`, 'PUT', document.globals.token, this.state.fields,
             (status, data) => {

@@ -8,7 +8,7 @@ class SignupLogic extends GenericForm {
 
     async okClick(event){
         if (this.state.mode=='message') {
-            this.props.handleMenu('Login'),
+            this.props.handleMenu(null, 'Login'),
             this.setState({message:message, editable:false})
         } else {
             await this.setState({editable:false});

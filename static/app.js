@@ -10,13 +10,11 @@ class App extends React.Component {
         this.setState({menuSelection:event.target.value});
     }
 
-    handleMenu(event) {
-        this.setState({menuSelection:null});
+    handleMenu(event, value=null) {
+        this.setState({menuSelection:value});
     }
 
     render(){
-        //console.log(`${document.globals.origin}, ${document.globals.user_id}:${document.globals.username}, ${document.globals.token}`);
-        console.log(this.state.menuSelection);
         return (
             <div className='containerH'>
                 <div className='containerV'>
