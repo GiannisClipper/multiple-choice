@@ -8,16 +8,14 @@
 
 from flask import Flask
 
-from sys import path
-path.append(path.join(path.dirname(__file__), '..'))
+import sys
+sys.path.append("..")
 
 app = Flask(__name__, instance_relative_config=True)
 
 from .config import Config
 app.config.from_object(Config)
 app.current_user = None
-
-print('!!!!!!!!!')
 
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy(app)
