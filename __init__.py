@@ -8,8 +8,8 @@
 
 from flask import Flask
 
-import sys
-sys.path.append(path.join(path.dirname(__file__), '..'))
+from sys import path
+path.append(path.join(path.dirname(__file__), '..'))
 
 app = Flask(__name__, instance_relative_config=True)
 
