@@ -14,6 +14,8 @@ from config import Config
 app.config.from_object(Config)
 app.current_user = None
 
+console.log('!!!!!!!!!')
+
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy(app)
 
@@ -24,13 +26,13 @@ migrate = Migrate(app, db)
 def index():
     return 'Multiple-choice project\'s back-end: RESTful API developed in python/flask, using SQL database and responding in JSON format...'
 
-from .base import bp as bp_base
+from base import bp as bp_base
 app.register_blueprint(bp_base)
 
-from .users import bp as bp_users
+from users import bp as bp_users
 app.register_blueprint(bp_users, url_prefix='/api/v1')
 
-from .works import bp as bp_works
+from works import bp as bp_works
 app.register_blueprint(bp_works, url_prefix='/api/v1')
 
 
