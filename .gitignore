@@ -2,7 +2,7 @@
 
 venv/
 
-migrations/
+#migrations/
 **/__pycache__
 
 /sqlite.db

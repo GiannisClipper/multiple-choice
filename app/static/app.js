@@ -3,7 +3,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {menuSelection:null};
-        document.globals = {origin:'http://localhost:5000/api/v1', user_id:null, username:null, token:null}
+        document.globals = {origin:'https://gc-multiple-choice.herokuapp.com/api/v1', user_id:null, username:null, token:null} //'http://localhost:5000/api/v1'
     }
 
     handleMenuClick(event){
