@@ -38,11 +38,11 @@ class RunWorksLogic extends GenericForm {
     async searchClick(event) {
         this.savedFields = this.initFields();
         this.savedFields['title'] = '%';
-        this.setState({mode:'search', fields:this.getSavedFields(), editable:true});
+        this.setState({mode:'search', fields:this.getSavedFields(), editable:true, message:null});
     }
 
     async okSearchClick(event) {
-        await this.setState({editable:false});
+        await this.setState({editable:false, message:null});
         await request(`${document.globals.origin}/works?title=${this.state.fields.title}`, 'GET', document.globals.token, null,
             (status, data) => {
                 let searchResults = [];
@@ -72,7 +72,9 @@ class RunWorksLogic extends GenericForm {
     async checkClick(event) {
         const result = workResult(this.state.fields.questions);
         const percent = result.correct/(result.correct+result.fault)*100;
-        const message = `Result: ${percent}% (${result.correct}/${result.correct+result.fault})`;
+        const remark = (percent==100)?'Excellent...':(percent>=80)?'Very good, keep going...':
+            (percent>=60)?'Good, try a bit more...':(percent>=40)?'Medium, try more...':'Bad, try harder...';
+        const message = `Result: ${percent}% (${result.correct}/${result.correct+result.fault}) ${remark}`;
         this.setState({mode:'check', message:message, editable:false});
     }
     

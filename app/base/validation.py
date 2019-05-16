@@ -33,7 +33,7 @@ class MinLength(NotBlank):
 
     def __call__(self):
         if self.value and len(self.value)<self.limit:
-            return f'{self.label}: min length {self.limit} characters'
+            return f'{self.label}: min length {self.limit} chars'
 
 
 class MaxLength(MinLength):
@@ -41,7 +41,7 @@ class MaxLength(MinLength):
 
     def __call__(self):
         if self.value and len(self.value)>self.limit:
-            return f'{self.label}: max length {self.limit} characters'
+            return f'{self.label}: max length {self.limit} chars'
 
 
 class MinValue(MinLength):

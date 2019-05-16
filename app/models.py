@@ -44,7 +44,7 @@ class Users(db.Model, Token, SingleRecordAPI, PaginatedListAPI):
         recipients = [self.email]
         token = JWToken.generate_token({'user_id':self.id}, 600)
         url = request.url_root[:-1]+url_for('users.activate_user', token=token)
-        html_body = f'Please click following link to activate your account: <a href="{url}">{url}</a>'
+        html_body = f'Hello {self.username}, to activate your account click the following link: <a href="{url}">{url}</a>'
         Email().send(subject, sender, recipients, html_body=html_body)
 
     @classmethod

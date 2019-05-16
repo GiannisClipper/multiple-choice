@@ -10,12 +10,13 @@ class RunMenu extends React.Component {
                 </div>
             ):(this.props.mode=='run')?(
                 <div className="menu">
-                <button onClick={this.props.checkClick}>Check</button>
-                <button onClick={this.props.searchClick}>Cancel</button>
+                <button onClick={this.props.checkClick}>Submit to check</button>
+                <button onClick={this.props.searchClick}>Back to search</button>
                 </div>
             ):(this.props.mode=='check')?(
                 <div className="menu">
                 <button onClick={this.props.closeClick}>Close</button>
+                <button onClick={this.props.searchClick}>Back to search</button>
                 </div>
             ):null
         )
