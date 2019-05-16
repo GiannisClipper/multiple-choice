@@ -23,8 +23,6 @@ migrate = Migrate(app, db)
 def index():
     return 'Multiple-choice demo web application. Back-end is a RESTful API developed in Python/Flask, using an SQL database and responding in JSON format. Front-end is a single-page application developed in ReactJS.'
 
-    : RESTful API developed in python/flask, using SQL database and responding in JSON format...'
-
 from .base import bp as bp_base
 app.register_blueprint(bp_base)
 
