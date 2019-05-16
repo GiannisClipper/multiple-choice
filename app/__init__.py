@@ -7,10 +7,6 @@
 #pip install flask_mail
 
 from flask import Flask
-
-import sys
-sys.path.append("..")
-
 app = Flask(__name__, instance_relative_config=True)
 
 from .config import Config
@@ -35,7 +31,6 @@ app.register_blueprint(bp_users, url_prefix='/api/v1')
 
 from .works import bp as bp_works
 app.register_blueprint(bp_works, url_prefix='/api/v1')
-
 
 if __name__=='__main__':
     app.run()
